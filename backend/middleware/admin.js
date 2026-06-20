@@ -1,10 +1,14 @@
-module.exports = (req, res, next) => {
+const auth =
+require("../middleware/auth")
 
-  if (req.user.role !== "admin") {
-    return res.status(403).json({
-      message: "Admin access required"
-    })
+const admin =
+require("../middleware/admin")
+
+router.get(
+  "/stats",
+  auth,
+  admin,
+  async(req,res)=>{
+    ...
   }
-
-  next()
-}
+)
