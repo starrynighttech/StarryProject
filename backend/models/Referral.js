@@ -1,17 +1,25 @@
 const mongoose = require("mongoose")
 
-const ReferralSchema = new mongoose.Schema({
-  referrerId: String,
-  referredUserId: String,
+const RewardSchema =
+new mongoose.Schema({
 
-  rewardAmount: {
-    type: Number,
-    default: 0
+  userId:String,
+
+  type:{
+    type:String,
+    enum:[
+      "referral",
+      "promotion",
+      "ad_reward",
+      "loyalty"
+    ]
   },
 
-  status: {
-    type: String,
-    default: "pending"
+  amount:Number,
+
+  status:{
+    type:String,
+    default:"approved"
   }
 
 },{
@@ -20,6 +28,6 @@ const ReferralSchema = new mongoose.Schema({
 
 module.exports =
 mongoose.model(
-  "Referral",
-  ReferralSchema
+  "Reward",
+  RewardSchema
 )
