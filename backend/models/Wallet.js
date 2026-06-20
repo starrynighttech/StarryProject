@@ -11,6 +11,16 @@ new mongoose.Schema({
   balance:{
     type:Number,
     default:0
+  },
+
+  totalEarned:{
+    type:Number,
+    default:0
+  },
+
+  totalSpent:{
+    type:Number,
+    default:0
   }
 
 },{
