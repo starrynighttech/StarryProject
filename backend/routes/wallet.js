@@ -3,24 +3,28 @@ const router = require("express").Router()
 const Wallet =
 require("../models/Wallet")
 
-router.get("/:userId", async (req, res) => {
+const Transaction =
+require("../models/Transaction")
 
-  let wallet =
+router.get("/:userId", async(req,res)=>{
+
+  const wallet =
   await Wallet.findOne({
-    userId: req.params.userId
+    userId:req.params.userId
   })
 
-  if (!wallet) {
-
-    wallet =
-    await Wallet.create({
-      userId: req.params.userId,
-      balance: 0
-    })
-
-  }
-
   res.json(wallet)
+
+})
+
+router.get("/:userId/history", async(req,res)=>{
+
+  const transactions =
+  await Transaction.find({
+    userId:req.params.userId
+  })
+
+  res.json(transactions)
 
 })
 
