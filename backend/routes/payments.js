@@ -1,22 +1,48 @@
 const router = require("express").Router()
 
-router.post("/paynow", async (req, res) => {
+const paynow =
+require("../config/paynow")
 
-  try {
+router.post("/checkout", async(req,res)=>{
 
-    const { amount } = req.body
+  try{
 
-    res.json({
-      success: true,
-      message:
-        "Paynow integration pending",
+    const {
+      email,
       amount
+    } = req.body
+
+    const payment =
+    paynow.createPayment(
+      "Starry Mobile Space",
+      email
+    )
+
+    payment.add(
+      "Order Payment",
+      amount
+    )
+
+    const response =
+    await paynow.send(payment)
+
+    if(response.success){
+
+      return res.json({
+        redirectUrl:
+        response.redirectUrl
+      })
+
+    }
+
+    return res.status(400).json({
+      message:"Payment Failed"
     })
 
-  } catch (err) {
+  }catch(err){
 
     res.status(500).json({
-      message: err.message
+      message:err.message
     })
 
   }
